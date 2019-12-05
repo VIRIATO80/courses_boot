@@ -11,7 +11,7 @@ import com.viriato.courses.model.Teacher;
 public class TeacherServiceImpl implements TeacherService {
 
 	private TeacherMapper mapper;
-	
+
 	public TeacherServiceImpl(TeacherMapper mapper) {
 		this.mapper = mapper;
 	}
