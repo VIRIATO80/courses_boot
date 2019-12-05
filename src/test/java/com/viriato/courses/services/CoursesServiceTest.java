@@ -27,14 +27,15 @@ public class CoursesServiceTest {
 
 	private CoursesService service;
 	
-	List<Course> courses = new ArrayList<Course>();
+	private List<Course> courses = new ArrayList<Course>();
 	
+	private Course validCourse;
 	
    @BeforeEach
    public void initMocks() {
        MockitoAnnotations.initMocks(this);
        service = new CoursesServiceImpl(mapper);
-       Course validCourse = new Course();
+       validCourse = new Course();
        validCourse.setTitle("Curso 1");
        validCourse.setActive(true);
        validCourse.setHours(10);
@@ -55,5 +56,10 @@ public class CoursesServiceTest {
 		assertThat(courses.get(0).getCourseId()).isEqualTo(1);
 		assertThat(courses.get(0).getHours()).isEqualTo(10);
 		assertThat(courses.get(0).getLevel()).isEqualTo(LevelEnum.Avanzado);
+	}
+	
+	@Test
+	public void addCourse_test() throws Exception {
+		service.addCourse(validCourse);
 	}
 }

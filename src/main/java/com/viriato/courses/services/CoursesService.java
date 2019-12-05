@@ -8,4 +8,6 @@ public interface CoursesService {
 
 	public List<Course> getAllCourses();
 
+	public int addCourse(Course validCourse);
+
 }
