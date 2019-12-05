@@ -16,16 +16,16 @@ import com.viriato.courses.model.Teacher;
 @Mapper
 public interface CoursesMapper {
 
-    @Select("SELECT c.courseId, c.title, c.level, c.hours, c.teacherId, c.active FROM COURSES c")
+	
+    @Select("SELECT c.courseId, c.title, c.level, c.hours, c.teacherId FROM COURSES c where c.active = true")
     @Results(value = {
                 @Result(property = "courseId", column = "courseId"),
                 @Result(property = "title", column = "title"),
                 @Result(property = "level", column = "level"),
                 @Result(property = "hours", column = "hours"),
-                @Result(property = "teacher", javaType= Teacher.class, column = "teacherId", one = @One(select = "getTeacher", fetchType = FetchType.EAGER)),
-                @Result(property = "active", column = "active")
+                @Result(property = "teacher", javaType= Teacher.class, column = "teacherId", one = @One(select = "getTeacher", fetchType = FetchType.EAGER))
             })
-	public List<Course> getAllCourses(); 
+    public List<Course> getAllCourses(); 
     
     
 	@Select("select * from teachers where teacherId=#{id}")

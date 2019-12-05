@@ -2,6 +2,8 @@ package com.viriato.courses.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,6 +13,8 @@ public class Course implements Serializable {
 	private LevelEnum level;
 	private int hours;
 	private Teacher teacher;
+	
+	
 	private boolean active;
 
 	public Course() {}
@@ -55,6 +59,7 @@ public class Course implements Serializable {
 		this.teacher = teacher;
 	}
 
+	@JsonIgnore
 	public boolean isActive() {
 		return active;
 	}

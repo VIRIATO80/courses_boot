@@ -41,7 +41,6 @@ public class CoursesControllerTest {
 	}
 	
 	
-	
 	@Test
 	public void getCourses_should_Return_list() {
 		ResponseEntity<Course[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/courses", Course[].class);
