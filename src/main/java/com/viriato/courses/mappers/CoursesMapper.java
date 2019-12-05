@@ -2,12 +2,13 @@ package com.viriato.courses.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.FetchType;
-import org.apache.ibatis.annotations.One;
 
 import com.viriato.courses.model.Course;
 import com.viriato.courses.model.Teacher;
@@ -34,5 +35,15 @@ public interface CoursesMapper {
             @Result(property = "name", column = "name")
         })
 	public Teacher getTeacher(Integer id);
+
+	
+	
+	@Insert("INSERT into COURSES(title, level, hours, teacherId, active) "
+			+ "VALUES(#{title}, #{level},#{hours}, #{teacher.teacherId}, #{active})")
+	public void addCourse(Course course);
+	
+    @Select("SELECT * FROM COURSES c where c.title = #{title}")
+    public Course getCourseByTitle(String title); 
+	
 
 }

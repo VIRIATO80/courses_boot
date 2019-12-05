@@ -11,7 +11,7 @@ CREATE TABLE COURSES (
   courseId      INT PRIMARY KEY AUTO_INCREMENT,
   title   		VARCHAR NOT NULL,
   level			VARCHAR NOT NULL DEFAULT 'Principiante' CHECK level in ('Principiante', 'Intermedio', 'Avanzado'),
-  hours		   	INT,
+  hours		   	INT DEFAULT 10,
   teacherId		INT NOT NULL,
   active		BOOLEAN DEFAULT FALSE
 );

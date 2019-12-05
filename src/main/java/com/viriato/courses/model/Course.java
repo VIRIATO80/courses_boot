@@ -13,8 +13,6 @@ public class Course implements Serializable {
 	private LevelEnum level;
 	private int hours;
 	private Teacher teacher;
-	
-	
 	private boolean active;
 
 	public Course() {}
