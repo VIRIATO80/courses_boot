@@ -1,35 +1,38 @@
 package com.viriato.courses.controllers;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.viriato.courses.CoursesApplication;
-import com.viriato.courses.services.CoursesService;
+
 
 @ContextConfiguration(classes = CoursesApplication.class)
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(CoursesController.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CoursesControllerTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+	@Value("${local.server.port}")
+	private int port;
 
-	@MockBean
-	private CoursesService service;
+	private TestRestTemplate restTemplate = new TestRestTemplate();
 
-	
 	@Test
-	public void getCourses_ShouldReturnCourses() throws Exception {
-
-	      mockMvc.perform(MockMvcRequestBuilders.get("/courses"))
-          .andExpect(MockMvcResultMatchers.status().isOk());
+	public void contextLoads() {
+		ResponseEntity<String> entity = this.restTemplate
+				.getForEntity("http://localhost:" + this.port + "/courses", String.class);
+		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
+
+
 }
+
+
+
+
