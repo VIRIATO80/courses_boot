@@ -31,7 +31,6 @@ public class CoursesController {
 	
 	@GET
 	public List<Course> courses() {
-		List<Course> courses = coursesService.getAllCourses();
-		return courses;
+		return coursesService.getAllCourses();
 	}
 }

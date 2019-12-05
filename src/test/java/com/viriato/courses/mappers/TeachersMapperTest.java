@@ -22,7 +22,7 @@ public class TeachersMapperTest {
 
     @Test
     public void getAllTeachers(){
-        List<Teacher> teachers = mapper.getAllTeacher();
+        List<Teacher> teachers = mapper.getAllTeachers();
         assertNotNull(teachers);
         assertNotNull(teachers);
         assertEquals(3, teachers.size());

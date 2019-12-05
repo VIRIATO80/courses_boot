@@ -17,5 +17,5 @@ public interface TeacherMapper {
             @Result(property = "teacherId", column = "teacherId"),
             @Result(property = "name", column = "name")
         })
-	public List<Teacher> getAllTeacher();
+	public List<Teacher> getAllTeachers();
 }
