@@ -4,6 +4,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
 import com.viriato.courses.controllers.CoursesController;
+import com.viriato.courses.controllers.LevelsController;
 import com.viriato.courses.controllers.TeachersController;
 
 
@@ -14,5 +15,6 @@ public class JerseyConfig extends ResourceConfig {
         
         register(CoursesController.class);
         register(TeachersController.class);
+        register(LevelsController.class);
     }
 }

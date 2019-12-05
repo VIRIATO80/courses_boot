@@ -40,13 +40,19 @@ public class CoursesControllerTest {
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
 	
+	@Test
+	public void testEndpoint_Levels() {
+		ResponseEntity<String> entity = this.restTemplate.getForEntity("http://localhost:" + this.port + "/levels",
+				String.class);
+		assertEquals(HttpStatus.OK, entity.getStatusCode());
+	}
 	
 	@Test
 	public void getCourses_should_Return_list() {
 		ResponseEntity<Course[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/courses", Course[].class);
 		// assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).hasSize(3);
+		assertThat(response.getBody()).hasSize(2);
 		assertThat(response.getBody()[0].getCourseId()).isEqualTo(1);
 	}
 	
@@ -57,6 +63,15 @@ public class CoursesControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).hasSize(3);
 		assertThat(response.getBody()[0].getTeacherId()).isEqualTo(1);
+	}
+	
+	@Test
+	public void getLevels_should_Return_list() {
+		ResponseEntity<String[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/levels", String[].class);
+		// assert
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).hasSize(3);
+		assertThat(response.getBody()[0]).isEqualTo("Principiante");
 	}
 	
 }
