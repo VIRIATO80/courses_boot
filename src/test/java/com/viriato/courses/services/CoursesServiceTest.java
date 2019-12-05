@@ -1,5 +1,6 @@
 package com.viriato.courses.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -15,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.viriato.courses.mappers.CoursesMapper;
 import com.viriato.courses.model.Course;
+import com.viriato.courses.model.LevelEnum;
 
 
 public class CoursesServiceTest {
@@ -33,6 +35,11 @@ public class CoursesServiceTest {
        MockitoAnnotations.initMocks(this);
        service = new CoursesServiceImpl(mapper);
        Course validCourse = new Course();
+       validCourse.setTitle("Curso 1");
+       validCourse.setActive(true);
+       validCourse.setHours(10);
+       validCourse.setCourseId(1);
+       validCourse.setLevel(LevelEnum.Avanzado);
        courses.add(validCourse);
    }
 	   
@@ -43,5 +50,10 @@ public class CoursesServiceTest {
 		List<Course> courses = service.getAllCourses();
 		assertNotNull(courses);
 		assertThat(courses.size(), is(1));
+		assertThat(courses.get(0).getTitle()).isEqualTo("Curso 1");
+		assertThat(courses.get(0).isActive()).isEqualTo(true);
+		assertThat(courses.get(0).getCourseId()).isEqualTo(1);
+		assertThat(courses.get(0).getHours()).isEqualTo(10);
+		assertThat(courses.get(0).getLevel()).isEqualTo(LevelEnum.Avanzado);
 	}
 }

@@ -7,7 +7,7 @@ public class Teacher implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int teacherId;
-	private String nombre;
+	private String name;
 
 	public int getTeacherId() {
 		return teacherId;
@@ -17,12 +17,14 @@ public class Teacher implements Serializable {
 		this.teacherId = teacherId;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
 
 }

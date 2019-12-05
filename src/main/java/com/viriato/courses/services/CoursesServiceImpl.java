@@ -11,7 +11,7 @@ import com.viriato.courses.model.Course;
 @Service
 public class CoursesServiceImpl implements CoursesService {
 
-	@Autowired
+	
 	private CoursesMapper mapper;
 	
 	public CoursesServiceImpl(CoursesMapper mapper) {
