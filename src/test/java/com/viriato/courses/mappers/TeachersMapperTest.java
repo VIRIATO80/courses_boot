@@ -3,6 +3,8 @@ package com.viriato.courses.mappers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +21,11 @@ public class TeachersMapperTest {
     TeacherMapper mapper;
 
     @Test
-    public void getFirstTeacher(){
-        Teacher teacher = mapper.getTeacher(1);
-        assertNotNull(teacher);
-        assertEquals(teacher.getName(), "Pedro Pony");
-        assertEquals(teacher.getTeacherId(), 1);
+    public void getAllTeachers(){
+        List<Teacher> teachers = mapper.getAllTeacher();
+        assertNotNull(teachers);
+        assertNotNull(teachers);
+        assertEquals(3, teachers.size());
     }
 
 

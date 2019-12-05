@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.viriato.courses.CoursesApplication;
 import com.viriato.courses.model.Course;
+import com.viriato.courses.model.Teacher;
 
 
 @ContextConfiguration(classes = CoursesApplication.class)
@@ -32,4 +33,13 @@ public class CoursesMapperTest {
         assertEquals(3, list.size());
     }
 
+    
+    @Test
+    public void getFirstTeacher(){
+        Teacher teacher = mapper.getTeacher(1);
+        assertNotNull(teacher);
+        assertEquals(teacher.getName(), "Pedro Pony");
+        assertEquals(teacher.getTeacherId(), 1);
+    }
+    
 }
