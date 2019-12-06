@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.FetchType;
-import org.apache.ibatis.session.RowBounds;
 
 import com.viriato.courses.model.Course;
 import com.viriato.courses.model.Teacher;
@@ -20,26 +19,11 @@ public interface CoursesMapper {
 
 	@Select("SELECT c.courseId, c.title, c.level, c.hours, c.teacherId FROM COURSES c where c.active = true ")
 	@Results(value = { 
-			@Result(property = "courseId", column = "courseId"),
-			@Result(property = "title", column = "title"), 
-			@Result(property = "level", column = "level"),
-			@Result(property = "hours", column = "hours"),
 			@Result(property = "teacher", javaType = Teacher.class, column = "teacherId", one = @One(select = "getTeacher", fetchType = FetchType.EAGER)) 
 	})
 	public List<Course> getAllCourses();
 	
-	
-	@Select("SELECT c.courseId, c.title, c.level, c.hours, c.teacherId FROM COURSES c where c.active = true")
-	@Results(value = { 
-			@Result(property = "courseId", column = "courseId"),
-			@Result(property = "title", column = "title"), 
-			@Result(property = "level", column = "level"),
-			@Result(property = "hours", column = "hours"),
-			@Result(property = "teacher", javaType = Teacher.class, column = "teacherId", one = @One(select = "getTeacher", fetchType = FetchType.EAGER)) 
-	})
-	public List<Course> getCoursesOfPage(RowBounds rowB);
-
-	
+		
 	@Select("select * from teachers where teacherId=#{id}")
 	public Teacher getTeacher(Integer id);
 
@@ -48,6 +32,5 @@ public interface CoursesMapper {
 			+ "VALUES(null, #{title}, #{level},#{hours}, #{teacher.teacherId}, #{active})")
 	@Options(useGeneratedKeys = true, keyColumn = "courseId", keyProperty = "courseId")
 	public int addCourse(Course course);
-
 
 }
