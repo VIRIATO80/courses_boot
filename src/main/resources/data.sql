@@ -1,4 +1,4 @@
-insert into TEACHERS (teacherId, name) 
+insert into TEACHERS (teacherId, teacherName) 
 values
 (1, 'Pedro Pony'),
 (2, 'Dani Dog'),

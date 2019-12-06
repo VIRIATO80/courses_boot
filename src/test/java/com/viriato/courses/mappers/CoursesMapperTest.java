@@ -35,7 +35,7 @@ public class CoursesMapperTest {
 	public void getFirstTeacher() {
 		Teacher teacher = mapper.getTeacher(1);
 		assertNotNull(teacher);
-		assertEquals(teacher.getName(), "Pedro Pony");
+		assertEquals(teacher.getTeacherName(), "Pedro Pony");
 		assertEquals(teacher.getTeacherId(), 1);
 	}
 

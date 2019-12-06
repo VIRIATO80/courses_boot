@@ -18,23 +18,20 @@ import com.viriato.courses.model.Teacher;
 public interface CoursesMapper {
 
 	@Select("SELECT c.courseId, c.title, c.level, c.hours, c.teacherId FROM COURSES c where c.active = true")
-	@Results(value = { @Result(property = "courseId", column = "courseId"),
+	@Results(value = { 
+			@Result(property = "courseId", column = "courseId"),
 			@Result(property = "title", column = "title"), @Result(property = "level", column = "level"),
 			@Result(property = "hours", column = "hours"),
 			@Result(property = "teacher", javaType = Teacher.class, column = "teacherId", one = @One(select = "getTeacher", fetchType = FetchType.EAGER)) })
 	public List<Course> getAllCourses();
 
 	@Select("select * from teachers where teacherId=#{id}")
-	@Results(value = { @Result(property = "teacherId", column = "teacherId"),
-			@Result(property = "name", column = "name") })
 	public Teacher getTeacher(Integer id);
 
-	@Insert("INSERT into COURSES(title, level, hours, teacherId, active) "
-			+ "VALUES(#{title}, #{level},#{hours}, #{teacher.teacherId}, #{active})")
-	@Options(useGeneratedKeys = true, keyProperty = "courseId")
+	@Insert("INSERT into COURSES(courseId, title, level, hours, teacherId, active) "
+			+ "VALUES(null, #{title}, #{level},#{hours}, #{teacher.teacherId}, #{active})")
+	@Options(useGeneratedKeys = true, keyColumn = "courseId", keyProperty = "courseId")
 	public int addCourse(Course course);
 
-	@Select("SELECT * FROM COURSES c where c.title = #{title}")
-	public Course getCourseByTitle(String title);
 
 }

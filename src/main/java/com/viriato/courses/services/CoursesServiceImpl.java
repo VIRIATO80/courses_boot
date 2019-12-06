@@ -23,8 +23,8 @@ public class CoursesServiceImpl implements CoursesService {
 	}
 
 	@Override
-	public int addCourse(Course newCourse) {
-		return mapper.addCourse(newCourse);
+	public void addCourse(Course newCourse) {
+		mapper.addCourse(newCourse);
 	}
 
 }

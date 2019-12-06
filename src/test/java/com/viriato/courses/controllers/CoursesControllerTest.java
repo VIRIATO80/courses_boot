@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.viriato.courses.CoursesApplication;
+import com.viriato.courses.dtos.CourseDTO;
 import com.viriato.courses.model.Course;
 import com.viriato.courses.model.LevelEnum;
 import com.viriato.courses.model.Teacher;
@@ -63,20 +64,17 @@ public class CoursesControllerTest {
 
 	@Test
 	public void addCourse_should_Return_newCourse() throws Exception {
-		Teacher fakeTeacher = new Teacher();
-		fakeTeacher.setTeacherId(1);
 
-		Course validCourse = new Course();
+		CourseDTO validCourse = new CourseDTO();
 		validCourse.setTitle("Curso 1");
 		validCourse.setActive(true);
 		validCourse.setHours(10);
-		validCourse.setCourseId(1);
-		validCourse.setTeacher(fakeTeacher);
+		validCourse.setTeacherId(1);
 		validCourse.setLevel(LevelEnum.Avanzado);
 
 		URI uri = new URI("http://localhost:" + this.port + "/courses");
 		HttpHeaders headers = new HttpHeaders();
-		HttpEntity<Course> request = new HttpEntity<>(validCourse, headers);
+		HttpEntity<CourseDTO> request = new HttpEntity<>(validCourse, headers);
 		ResponseEntity<String> response = this.restTemplate.postForEntity(uri, request, String.class);
 		// assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);

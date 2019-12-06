@@ -35,7 +35,7 @@ public class TeachersServiceTest {
        service = new TeacherServiceImpl(mapper);
        Teacher validTeacher = new Teacher();
        validTeacher.setTeacherId(4);
-       validTeacher.setName("Rebeca Rabbit");
+       validTeacher.setTeacherName("Rebeca Rabbit");
        teachers.add(validTeacher);
    }
 	   
@@ -46,7 +46,7 @@ public class TeachersServiceTest {
 		List<Teacher> teachers = service.getAllTeachers();
 		assertNotNull(teachers);
 		assertThat(teachers.size(), is(1));
-		assertThat(teachers.get(0).getName()).isEqualTo("Rebeca Rabbit");
+		assertThat(teachers.get(0).getTeacherName()).isEqualTo("Rebeca Rabbit");
 		assertThat(teachers.get(0).getTeacherId()).isEqualTo(4);
 	}
 }
