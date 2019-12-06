@@ -17,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.viriato.courses.dtos.CourseDTO;
 import com.viriato.courses.model.Course;
@@ -29,7 +28,6 @@ import com.viriato.courses.services.CoursesService;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CoursesController {
-	
 	
 	private CoursesService coursesService;
 	
@@ -48,7 +46,7 @@ public class CoursesController {
 	}
 	
 	@POST
-	public Response addCourse(@RequestBody @Valid CourseDTO courseDTO) {
+	public Response addCourse(@Valid CourseDTO courseDTO) {
 		Course course = modelMapper.map(courseDTO , Course.class);
 		coursesService.addCourse(course);
 		courseDTO.setCourseId(course.getCourseId());

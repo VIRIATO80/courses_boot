@@ -79,6 +79,39 @@ public class CoursesControllerTest {
 		// assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
+	
+	@Test
+	public void addBadCourse_should_return_BadRequestCode() throws Exception {
+
+		CourseDTO validCourse = new CourseDTO();
+		validCourse.setTitle("Curso 1");
+		validCourse.setActive(true);
+		validCourse.setHours(10);
+
+		URI uri = new URI("http://localhost:" + this.port + "/courses");
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<CourseDTO> request = new HttpEntity<>(validCourse, headers);
+		ResponseEntity<String> response = this.restTemplate.postForEntity(uri, request, String.class);
+		// assert
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
+	
+	@Test
+	public void addCourse_with_invalid_teacher_should_return_Error500Code() throws Exception {
+
+		CourseDTO validCourse = new CourseDTO();
+		validCourse.setTitle("Curso 1");
+		validCourse.setActive(true);
+		validCourse.setHours(10);
+		validCourse.setTeacherId(7);
+
+		URI uri = new URI("http://localhost:" + this.port + "/courses");
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<CourseDTO> request = new HttpEntity<>(validCourse, headers);
+		ResponseEntity<String> response = this.restTemplate.postForEntity(uri, request, String.class);
+		// assert
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+	}	
 
 	@Test
 	public void getTeachers_should_Return_list() {
