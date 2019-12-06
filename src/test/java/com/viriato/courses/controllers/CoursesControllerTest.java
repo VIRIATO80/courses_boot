@@ -58,7 +58,7 @@ public class CoursesControllerTest {
 				Course[].class);
 		// assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).hasSize(2);
+		assertThat(response.getBody()).hasSize(4);
 		assertThat(response.getBody()[0].getCourseId()).isEqualTo(1);
 	}
 

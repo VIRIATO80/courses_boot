@@ -36,26 +36,44 @@ public class CoursesServiceTest {
        MockitoAnnotations.initMocks(this);
        service = new CoursesServiceImpl(mapper);
        validCourse = new Course();
-       validCourse.setTitle("Curso 1");
+       validCourse.setTitle("Curso A");
        validCourse.setActive(true);
        validCourse.setHours(10);
        validCourse.setCourseId(1);
        validCourse.setLevel(LevelEnum.Avanzado);
        courses.add(validCourse);
+       
+       Course course2 = new Course();
+       course2.setTitle("Curso B");
+       course2.setActive(true);
+       course2.setHours(10);
+       course2.setCourseId(1);
+       course2.setLevel(LevelEnum.Intermedio);
+       courses.add(course2);
    }
 	   
 	   
 	@Test
 	public void getAllCourses_should_return_list() throws Exception {
 		given(mapper.getAllCourses()).willReturn(courses);
-		List<Course> courses = service.getAllCourses();
+		courses = service.getAllCourses(null);
 		assertNotNull(courses);
-		assertThat(courses.size(), is(1));
-		assertThat(courses.get(0).getTitle()).isEqualTo("Curso 1");
+		assertThat(courses.size(), is(2));
+		assertThat(courses.get(0).getTitle()).isEqualTo("Curso A");
 		assertThat(courses.get(0).isActive()).isEqualTo(true);
 		assertThat(courses.get(0).getCourseId()).isEqualTo(1);
 		assertThat(courses.get(0).getHours()).isEqualTo(10);
 		assertThat(courses.get(0).getLevel()).isEqualTo(LevelEnum.Avanzado);
+	}
+	
+	@Test
+	public void getAllCourses_can_be_order_by_title() throws Exception {
+		given(mapper.getAllCourses()).willReturn(courses);
+		courses = service.getAllCourses("ASC");
+		assertThat(courses.get(0).getTitle()).isEqualTo("Curso A");
+		//Invertir el orden
+		courses = service.getAllCourses("DESC");
+		assertThat(courses.get(0).getTitle()).isEqualTo("Curso B");
 	}
 	
 	@Test

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -25,12 +26,22 @@ public class CoursesMapperTest {
 	CoursesMapper mapper;
 
 	@Test
-	public void getAllCourses() {
+	public void getAllCoursesActives() {
 		List<Course> list = mapper.getAllCourses();
 		assertNotNull(list);
-		assertEquals(2, list.size());
+		assertEquals(4, list.size());
 	}
 
+	
+	@Test
+	public void getLastCourse_with_page() {
+		//Num of init, num of records
+		RowBounds conf = new RowBounds(3, 5);
+		List<Course> list = mapper.getCoursesOfPage(conf);
+		assertNotNull(list);
+		assertEquals(1, list.size());
+	}
+	
 	@Test
 	public void getFirstTeacher() {
 		Teacher teacher = mapper.getTeacher(1);

@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -38,11 +39,11 @@ public class CoursesController {
 	public CoursesController(CoursesService service) {
 		coursesService = service;
 	}
-	
+
 	@GET
-	public List<CourseDTO> courses() {
+	public List<CourseDTO> courses(	@QueryParam("order") String orderTitle) {
 		Type listType = new TypeToken<List<CourseDTO>>(){}.getType();
-		return modelMapper.map(coursesService.getAllCourses(), listType);
+		return modelMapper.map(coursesService.getAllCourses(orderTitle), listType);
 	}
 	
 	@POST
