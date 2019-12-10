@@ -82,10 +82,4 @@ public class CoursesServiceTest {
 		assertThat(courses.get(0).isActive()).isEqualTo(true);
 		assertThat(courses.get(1).isActive()).isEqualTo(true);
 	}
-	
-	
-	@Test
-	public void addCourse_test() throws Exception {
-		service.addCourse(validCourse);
-	}
 }

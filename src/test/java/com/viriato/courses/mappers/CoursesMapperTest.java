@@ -81,7 +81,7 @@ public class CoursesMapperTest {
 		course.setLevel(LevelEnum.Intermedio);
 		course.setTeacher(teacher);
 		int newId= mapper.addCourse(course);
-		assertEquals(newId, 1);
+		assertEquals(1,newId);
 	}
 	
 	//Se lanza excepción cuando uno de los atributos obligatorios del curso faltan
@@ -97,8 +97,8 @@ public class CoursesMapperTest {
 	public void getFirstTeacher() {
 		Teacher teacher = mapper.getTeacherById(1);
 		assertNotNull(teacher);
-		assertEquals(teacher.getTeacherName(), "Pedro Pony");
-		assertEquals(teacher.getTeacherId(), 1);
+		assertEquals("Pedro Pony", teacher.getTeacherName());
+		assertEquals(1, teacher.getTeacherId());
 	}
 
 }

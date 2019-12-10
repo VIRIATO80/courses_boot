@@ -9,7 +9,6 @@ public class Course {
 	private Teacher teacher;
 	private boolean active;
 
-	public Course() {}
 	
 	public int getCourseId() {
 		return courseId;
