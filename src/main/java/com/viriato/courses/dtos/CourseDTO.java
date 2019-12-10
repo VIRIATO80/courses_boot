@@ -33,7 +33,6 @@ public class CourseDTO implements Serializable {
 
 	private int hours;
 
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private boolean active;
 
 	public int getCourseId() {

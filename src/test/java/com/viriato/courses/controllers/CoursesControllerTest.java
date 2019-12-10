@@ -1,9 +1,16 @@
 package com.viriato.courses.controllers;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.everyItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +25,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.viriato.courses.CoursesApplication;
 import com.viriato.courses.dtos.CourseDTO;
-import com.viriato.courses.model.Course;
 import com.viriato.courses.model.LevelEnum;
 import com.viriato.courses.model.Teacher;
 
@@ -45,23 +51,43 @@ public class CoursesControllerTest {
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
 
+	
+	//solo se mostrarán los cursos marcados como activos
 	@Test
-	public void testEndpoint_Levels() {
-		ResponseEntity<String> entity = this.restTemplate.getForEntity("http://localhost:" + this.port + "/levels",
-				String.class);
-		assertEquals(HttpStatus.OK, entity.getStatusCode());
-	}
-
-	@Test
-	public void getCourses_should_Return_list() {
-		ResponseEntity<Course[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/courses",
-				Course[].class);
-		// assert
+	public void getCourses_should_Return_list_with_only_active_courses() {
+		//when
+		ResponseEntity<CourseDTO[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/courses",
+				CourseDTO[].class);
+		//then
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).hasSize(4);
-		assertThat(response.getBody()[0].getCourseId()).isEqualTo(1);
+		List<CourseDTO> listCourses = Arrays.asList(response.getBody());
+		assertThat(listCourses, everyItem(hasProperty("active", is(true))));	
+	}
+	
+	//se deberá ordenar la tabla por la columna del título de curso (Ascendente)
+	@Test
+	public void list_should_be_orderby_title_asc() {
+		//when
+		ResponseEntity<CourseDTO[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/courses?order=ASC",
+				CourseDTO[].class);
+		//then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);	
+		assertThat(response.getBody()[0], hasProperty("title", is("Angular Principles")));	
 	}
 
+	//se deberá ordenar la tabla por la columna del título de curso (DESC)
+	@Test
+	public void list_should_be_orderby_title_desc() {
+		//when
+		ResponseEntity<CourseDTO[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/courses?order=DESC",
+				CourseDTO[].class);
+		//then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()[0], hasProperty("title", is("Spring Framework")));	
+	}
+	
+	//como usuario quiero poder dar de alta nuevos cursos
 	@Test
 	public void addCourse_should_Return_newCourse() throws Exception {
 
@@ -80,6 +106,8 @@ public class CoursesControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
 	
+	
+	//Si no se aportan todos los datos necesario en la inserción, se lanzará una excepción
 	@Test
 	public void addBadCourse_should_return_BadRequestCode() throws Exception {
 
@@ -96,6 +124,7 @@ public class CoursesControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
 	
+	//Si no se aportan todos los datos necesario en la inserción, se lanzará una excepción
 	@Test
 	public void addCourse_with_invalid_teacher_should_return_Error500Code() throws Exception {
 
@@ -113,6 +142,7 @@ public class CoursesControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
 	}	
 
+	//El endpoint de teachers devuelve los profesores
 	@Test
 	public void getTeachers_should_Return_list() {
 		ResponseEntity<Teacher[]> response = this.restTemplate
@@ -121,16 +151,6 @@ public class CoursesControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).hasSize(3);
 		assertThat(response.getBody()[0].getTeacherId()).isEqualTo(1);
-	}
-
-	@Test
-	public void getLevels_should_Return_list() {
-		ResponseEntity<String[]> response = this.restTemplate.getForEntity("http://localhost:" + this.port + "/levels",
-				String[].class);
-		// assert
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).hasSize(3);
-		assertThat(response.getBody()[0]).isEqualTo("Principiante");
 	}
 
 }

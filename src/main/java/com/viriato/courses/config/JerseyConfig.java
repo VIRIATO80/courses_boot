@@ -5,7 +5,6 @@ import org.glassfish.jersey.server.ServerProperties;
 import org.springframework.context.annotation.Configuration;
 
 import com.viriato.courses.controllers.CoursesController;
-import com.viriato.courses.controllers.LevelsController;
 import com.viriato.courses.controllers.TeachersController;
 import com.viriato.courses.errorhandling.BadRequestExceptionMapper;
 import com.viriato.courses.errorhandling.GenericExceptionMapper;
@@ -19,9 +18,8 @@ public class JerseyConfig extends ResourceConfig {
     	//Register resources
         register(CoursesController.class);
         register(TeachersController.class);
-        register(LevelsController.class);
         
-        //register exception mappers
+        //register exception handlers
         register(BadRequestExceptionMapper.class);
 		register(GenericExceptionMapper.class);
 		

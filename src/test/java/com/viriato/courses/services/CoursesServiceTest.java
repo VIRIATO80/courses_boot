@@ -55,8 +55,11 @@ public class CoursesServiceTest {
 	   
 	@Test
 	public void getAllCourses_should_return_list() throws Exception {
+		// GIVEN
 		given(mapper.getAllCourses()).willReturn(courses);
+		// WHEN
 		courses = service.getAllCourses(null);
+		// THEN
 		assertNotNull(courses);
 		assertThat(courses.size(), is(2));
 		assertThat(courses.get(0).getTitle()).isEqualTo("Curso A");
@@ -66,15 +69,20 @@ public class CoursesServiceTest {
 		assertThat(courses.get(0).getLevel()).isEqualTo(LevelEnum.Avanzado);
 	}
 	
+	
 	@Test
-	public void getAllCourses_can_be_order_by_title() throws Exception {
+	public void getAllCourses_should_return_only_active() throws Exception {
+		// GIVEN
 		given(mapper.getAllCourses()).willReturn(courses);
-		courses = service.getAllCourses("ASC");
-		assertThat(courses.get(0).getTitle()).isEqualTo("Curso A");
-		//Invertir el orden
-		courses = service.getAllCourses("DESC");
-		assertThat(courses.get(0).getTitle()).isEqualTo("Curso B");
+		// WHEN
+		courses = service.getAllCourses(null);
+		// THEN
+		assertNotNull(courses);
+		assertThat(courses.size(), is(2));
+		assertThat(courses.get(0).isActive()).isEqualTo(true);
+		assertThat(courses.get(1).isActive()).isEqualTo(true);
 	}
+	
 	
 	@Test
 	public void addCourse_test() throws Exception {

@@ -44,6 +44,13 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mybatis.dynamic-sql/mybatis-dynamic-sql -->
+		<dependency>
+		    <groupId>org.mybatis.dynamic-sql</groupId>
+		    <artifactId>mybatis-dynamic-sql</artifactId>
+		    <version>1.1.2</version>
+		</dependency>
+
 	    <dependency>
 		    <groupId>org.modelmapper</groupId>
 		    <artifactId>modelmapper</artifactId>

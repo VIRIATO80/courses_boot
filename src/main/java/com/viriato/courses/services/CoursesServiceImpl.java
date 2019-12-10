@@ -1,6 +1,5 @@
 package com.viriato.courses.services;
 
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,17 +19,18 @@ public class CoursesServiceImpl implements CoursesService {
 
 	@Override
 	public List<Course> getAllCourses(String order) {
-		List<Course> courses = mapper.getAllCourses();
-		if(order != null)
-			orderCourses(order, courses);
-		return courses;
+		if(order != null) {
+			return getOrderCourses(order);
+		}else {
+			return mapper.getAllCourses();
+		}		
 	}
 
-	private void orderCourses(String order, List<Course> courses) {
+	private List<Course> getOrderCourses(String order) {
 		if("ASC".equals(order)) {
-			courses.sort(Comparator.comparing(Course::getTitle));
-		} else if("DESC".equals(order)) {
-			courses.sort(Comparator.comparing(Course::getTitle).reversed());
+			return mapper.getCoursesByTitleAsc();
+		} else {
+			return mapper.getCoursesByTitleDesc();
 		}
 	}
 

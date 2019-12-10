@@ -1,6 +1,5 @@
 package com.viriato.courses.controllers;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,14 +13,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.viriato.courses.dtos.CourseDTO;
-import com.viriato.courses.model.Course;
-import com.viriato.courses.services.CoursesService;
+import com.viriato.courses.managers.CoursesManager;
 
 
 @Component
@@ -30,27 +25,20 @@ import com.viriato.courses.services.CoursesService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CoursesController {
 	
-	private CoursesService coursesService;
+	private CoursesManager coursesManager;
 	
-    @Autowired
-    private ModelMapper modelMapper;
-	
-	@Autowired
-	public CoursesController(CoursesService service) {
-		coursesService = service;
+	public CoursesController(CoursesManager manager) {
+		coursesManager = manager;
 	}
 
 	@GET
 	public List<CourseDTO> courses(	@QueryParam("order") String orderTitle) {
-		Type listType = new TypeToken<List<CourseDTO>>(){}.getType();
-		return modelMapper.map(coursesService.getAllCourses(orderTitle), listType);
+		return coursesManager.getAllCourses(orderTitle);
 	}
 	
 	@POST
 	public Response addCourse(@Valid CourseDTO courseDTO) {
-		Course course = modelMapper.map(courseDTO , Course.class);
-		coursesService.addCourse(course);
-		courseDTO.setCourseId(course.getCourseId());
+		coursesManager.addCourse(courseDTO);
 		return Response.status(Status.CREATED).entity(courseDTO).build();
 	}
 }
