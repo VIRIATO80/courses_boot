@@ -11,10 +11,10 @@
 	</parent>
 	<groupId>com.viriato</groupId>
 	<artifactId>courses</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>courses</name>
 	<description>Courses API</description>
-
+    <packaging>${packaging.type}</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -44,20 +44,12 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mybatis.dynamic-sql/mybatis-dynamic-sql -->
-		<dependency>
-		    <groupId>org.mybatis.dynamic-sql</groupId>
-		    <artifactId>mybatis-dynamic-sql</artifactId>
-		    <version>1.1.2</version>
-		</dependency>
-
 	    <dependency>
 		    <groupId>org.modelmapper</groupId>
 		    <artifactId>modelmapper</artifactId>
 		    <version>2.3.2</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -66,5 +58,27 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+	   <profile>
+	       <id>jar</id>
+	       <properties>
+	           <packaging.type>jar</packaging.type>
+	           <spring.profiles.active>jarProfile</spring.profiles.active>
+	       </properties>
+	   </profile>
+	   <profile>
+	       <id>war</id>
+	       <properties>
+	            <packaging.type>war</packaging.type>
+	            <spring.profiles.active>warProfile</spring.profiles.active>
+	       </properties>
+	       <dependencies>
+	            <dependency>
+	                <groupId>org.springframework.boot</groupId>
+	                <artifactId>spring-boot-starter-tomcat</artifactId>
+	                <scope>provided</scope>
+	            </dependency>
+	       </dependencies>
+	   </profile>
+	</profiles>
 </project>
